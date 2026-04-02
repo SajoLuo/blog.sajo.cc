@@ -43,22 +43,32 @@ const { title, subtitle, headerImg, headerMask, tags, author, date, catalog, pre
           <slot />
         </article>
 
-        {/* Post navigation */}
+        {/* Post navigation — card style matching original */}
         {(prevPost || nextPost) && (
-          <nav class="flex justify-between items-start gap-4 pt-8 mt-8 border-t border-gray-light">
+          <ul class="flex justify-between list-none p-0 mt-10 gap-4">
             {prevPost ? (
-              <a href={`/posts/${prevPost.slug}/`} class="text-sm text-gray-dark hover:text-brand no-underline max-w-[45%]">
-                &larr; Previous<br />
-                <span class="text-gray">{prevPost.title}</span>
-              </a>
-            ) : <span />}
+              <li>
+                <a
+                  href={`/posts/${prevPost.slug}/`}
+                  class="block border border-[#ddd] bg-white px-6 py-4 text-sm text-gray-dark no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:text-brand"
+                >
+                  Previous<br />
+                  <span class="text-gray">{prevPost.title}</span>
+                </a>
+              </li>
+            ) : <li />}
             {nextPost ? (
-              <a href={`/posts/${nextPost.slug}/`} class="text-sm text-gray-dark hover:text-brand no-underline text-right max-w-[45%]">
-                Next &rarr;<br />
-                <span class="text-gray">{nextPost.title}</span>
-              </a>
-            ) : <span />}
-          </nav>
+              <li>
+                <a
+                  href={`/posts/${nextPost.slug}/`}
+                  class="block border border-[#ddd] bg-white px-6 py-4 text-sm text-gray-dark no-underline text-right transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:text-brand"
+                >
+                  Next<br />
+                  <span class="text-gray">{nextPost.title}</span>
+                </a>
+              </li>
+            ) : <li />}
+          </ul>
         )}
 
         <Giscus />
