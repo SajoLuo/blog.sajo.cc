@@ -1,0 +1,58 @@
+---
+import { siteConfig } from '../config';
+---
+
+<footer class="bg-gray-dark text-white/60 py-12">
+  <div class="max-w-6xl mx-auto px-4 text-center">
+    <!-- Social links -->
+    <ul class="flex justify-center gap-4 mb-6 list-none p-0">
+      {siteConfig.social.rss && (
+        <li>
+          <a href="/rss.xml" class="text-white/60 hover:text-white transition-colors">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+        </li>
+      )}
+      {siteConfig.social.weibo && (
+        <li>
+          <a
+            href={`https://weibo.com/${siteConfig.social.weibo}`}
+            target="_blank"
+            rel="noopener"
+            class="text-white/60 hover:text-white transition-colors"
+          >
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+        </li>
+      )}
+      {siteConfig.social.github && (
+        <li>
+          <a
+            href={`https://github.com/${siteConfig.social.github}`}
+            target="_blank"
+            rel="noopener"
+            class="text-white/60 hover:text-white transition-colors"
+          >
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+        </li>
+      )}
+    </ul>
+
+    <!-- Copyright -->
+    <p class="text-sm">
+      &copy; {new Date().getFullYear()} {siteConfig.title}
+      <span class="mx-1">|</span>
+      Powered by <a href="https://astro.build" class="text-white/80 hover:text-white no-underline" target="_blank" rel="noopener">Astro</a>
+    </p>
+  </div>
+</footer>

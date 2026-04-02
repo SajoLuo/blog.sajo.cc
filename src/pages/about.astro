@@ -1,0 +1,30 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import Giscus from '../components/Giscus.astro';
+import { siteConfig } from '../config';
+---
+
+<PageLayout title="About" subtitle="HomoLab_Sajo." headerImg={siteConfig.headerImg}>
+  <div class="prose max-w-none">
+    <blockquote>
+      <p>HomoLab_Sajo<br />一般通过SA</p>
+    </blockquote>
+
+    <p>恁好<strong>我是Sajo</strong>，家住下北泽</p>
+
+    <p>HomoLab厂牌主理人</p>
+
+    <p>
+      这是我的 <a href="https://blog.sajo.cc/">Blog</a> 与{' '}
+      <a href="https://www.weibo.com/homolive">Weibo</a>{' '}
+      如果有什么问题，欢迎对线
+    </p>
+
+    <h5>Something</h5>
+    <ul>
+      <li><a href="https://music.163.com/#/artist?id=1089067">我的网易云</a></li>
+    </ul>
+  </div>
+
+  <Giscus />
+</PageLayout>

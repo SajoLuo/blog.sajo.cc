@@ -1,0 +1,39 @@
+---
+import BaseLayout from './BaseLayout.astro';
+import Header from '../components/Header.astro';
+import Sidebar from '../components/Sidebar.astro';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  headerImg?: string;
+  description?: string;
+  showSidebar?: boolean;
+}
+
+const { title, subtitle, headerImg, description, showSidebar = true } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <Header title={title} subtitle={subtitle} headerImg={headerImg} />
+
+  <div class="max-w-[1170px] mx-auto px-4 py-10">
+    <div class:list={[
+      showSidebar ? 'flex gap-12' : 'flex justify-center',
+    ]}>
+      {/* Main content - 8/12 columns like Bootstrap */}
+      <main class:list={[
+        showSidebar ? 'w-full lg:w-8/12' : 'max-w-3xl w-full',
+      ]}>
+        <slot />
+      </main>
+
+      {/* Sidebar - 3/12 columns */}
+      {showSidebar && (
+        <div class="hidden lg:block lg:w-3/12">
+          <Sidebar />
+        </div>
+      )}
+    </div>
+  </div>
+</BaseLayout>

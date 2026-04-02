@@ -1,0 +1,113 @@
+---
+import { getCollection } from 'astro:content';
+import { siteConfig } from '../config';
+
+const allPosts = await getCollection('posts');
+
+const tagCounts: Record<string, number> = {};
+allPosts.forEach((post) => {
+  post.data.tags.forEach((tag) => {
+    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+  });
+});
+
+const featuredTags = Object.entries(tagCounts)
+  .filter(([, count]) => count > siteConfig.featuredTagMinCount)
+  .sort((a, b) => b[1] - a[1]);
+---
+
+<aside class="hidden lg:block">
+  {/* Featured Tags */}
+  {siteConfig.featuredTags && featuredTags.length > 0 && (
+    <section class="mb-8">
+      <h5 class="text-xs font-extrabold uppercase tracking-widest text-gray-dark mb-4">
+        <a href="/tags/" class="text-gray-dark hover:text-brand no-underline">Featured Tags</a>
+      </h5>
+      <div class="flex flex-wrap gap-2">
+        {featuredTags.map(([tag]) => (
+          <a
+            href={`/tags/#${tag}`}
+            class="text-xs text-gray-l border border-gray-l/60 rounded-full px-3 py-1 no-underline hover:text-brand hover:border-brand transition-colors"
+          >
+            {tag}
+          </a>
+        ))}
+      </div>
+    </section>
+  )}
+
+  {/* About */}
+  <section class="mb-8">
+    <h5 class="text-xs font-extrabold uppercase tracking-widest text-gray-dark mb-4">About Me</h5>
+    <div>
+      <a href="/about/">
+        <img
+          src={siteConfig.sidebar.avatar}
+          alt="avatar"
+          class="w-4/5 rounded-md mb-3 object-cover"
+        />
+      </a>
+      <p class="text-sm text-gray-l italic">{siteConfig.sidebar.aboutDescription}</p>
+      {/* Social icons */}
+      <ul class="flex gap-2 mt-3 list-none p-0">
+        {siteConfig.social.rss && (
+          <li>
+            <a href="/rss.xml" class="text-gray-l hover:text-brand">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+        )}
+        {siteConfig.social.weibo && (
+          <li>
+            <a href={`https://weibo.com/${siteConfig.social.weibo}`} target="_blank" rel="noopener" class="text-gray-l hover:text-brand">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+        )}
+        {siteConfig.social.github && (
+          <li>
+            <a href={`https://github.com/${siteConfig.social.github}`} target="_blank" rel="noopener" class="text-gray-l hover:text-brand">
+              <span class="fa-stack fa-lg">
+                <i class="fa fa-circle fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+              </span>
+            </a>
+          </li>
+        )}
+      </ul>
+      {siteConfig.email && (
+        <p class="text-xs text-gray-l mt-2">
+          <i class="fa fa-envelope-o mr-1"></i> {siteConfig.email}
+        </p>
+      )}
+    </div>
+  </section>
+
+  {/* Friends */}
+  {siteConfig.friends.length > 0 && (
+    <section>
+      <hr class="border-gray-light mb-4" />
+      <h5 class="text-xs font-extrabold uppercase tracking-widest text-gray-dark mb-3">Friends</h5>
+      <ul class="flex flex-wrap gap-x-3 gap-y-1 list-none p-0">
+        {siteConfig.friends.map((friend) => (
+          <li>
+            <a
+              href={friend.href}
+              target="_blank"
+              rel="noopener"
+              class="text-sm text-gray hover:text-brand no-underline"
+            >
+              {friend.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+</aside>

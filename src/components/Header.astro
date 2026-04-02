@@ -1,0 +1,84 @@
+---
+import { siteConfig } from '../config';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  headerImg?: string;
+  headerMask?: number;
+  tags?: string[];
+  author?: string;
+  date?: Date;
+  variant?: 'site' | 'post' | 'page';
+}
+
+const { title, subtitle, headerImg, headerMask, tags, author, date, variant = 'site' } = Astro.props;
+const bgImage = headerImg || siteConfig.headerImg;
+const isPost = variant === 'post';
+---
+
+<header
+  class:list={[
+    'relative bg-cover bg-center bg-no-repeat flex',
+    isPost ? 'items-end' : 'items-center justify-center',
+  ]}
+  style={`background-image: url('${bgImage}')`}
+>
+  <div
+    class="absolute inset-0"
+    style={`background: rgba(0,0,0,${headerMask ?? 0.3})`}
+  ></div>
+
+  {isPost ? (
+    /* Post header — left-aligned, pinned to bottom, same grid as article (offset-2 + 8-col) */
+    <div class="relative z-10 w-full max-w-[1170px] mx-auto px-4" style="padding: 200px 0 50px;">
+      <div class="lg:grid lg:grid-cols-12">
+        <div class="hidden lg:block lg:col-span-2"></div>
+        <div class="lg:col-span-8 text-white">
+        {tags && tags.length > 0 && (
+          <div class="flex flex-wrap gap-2 mb-4">
+            {tags.map((tag) => (
+              <a
+                href={`/tags/#${tag}`}
+                class="text-xs bg-white/25 hover:bg-white/35 text-white px-3 py-1 rounded-full no-underline transition-colors"
+              >
+                {tag}
+              </a>
+            ))}
+          </div>
+        )}
+
+        <h1 class="font-bold font-sans leading-tight mb-2" style="font-size: 55px;">
+          {title}
+        </h1>
+
+        {subtitle && (
+          <h2 class="text-white/80 font-normal mb-3" style="font-size: 30px;">{subtitle}</h2>
+        )}
+
+        {date && (
+          <p class="text-white/60 italic font-serif" style="font-size: 20px;">
+            Posted by {author || siteConfig.author} on{' '}
+            {date.toLocaleDateString('en-US', {
+              year: 'numeric',
+              month: 'long',
+              day: 'numeric',
+            })}
+          </p>
+        )}
+        </div>
+      </div>
+    </div>
+  ) : (
+    /* Site/page header — centered with divider between title and slogan */
+    <div class="relative z-10 w-full max-w-3xl mx-auto px-4 text-center text-white" style="padding: 150px 0;">
+      <h1 class="font-bold font-sans leading-none" style="font-size: 80px; margin-bottom: 10px;">
+        {title}
+      </h1>
+
+      {subtitle && (
+        <h2 class="text-white/70 font-light" style="font-size: 18px; margin-top: 10px;">{subtitle}</h2>
+      )}
+    </div>
+  )}
+</header>

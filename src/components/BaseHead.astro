@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+import { siteConfig } from '../config';
+
+interface Props {
+  title?: string;
+  description?: string;
+  keywords?: string;
+}
+
+const { title, description, keywords } = Astro.props;
+const pageTitle = title ? `${title} - ${siteConfig.seoTitle}` : siteConfig.seoTitle;
+const pageDesc = description || siteConfig.description;
+const pageKeywords = keywords || siteConfig.keywords;
+---
+
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content={pageDesc} />
+<meta name="keywords" content={pageKeywords} />
+<meta name="author" content={siteConfig.author} />
+
+<title>{pageTitle}</title>
+
+<link rel="icon" href="/favicon.ico" />
+<link rel="canonical" href={Astro.url.href} />
+
+<!-- Font Awesome -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css"
+/>
+
+<!-- Google Fonts: Inter for UI, Lora for serif -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:ital,wght@0,400;0,700;1,400&display=swap"
+  rel="stylesheet"
+/>

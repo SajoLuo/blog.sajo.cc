@@ -1,0 +1,47 @@
+---
+import type { GetStaticPaths } from 'astro';
+import { getCollection } from 'astro:content';
+import PageLayout from '../../layouts/PageLayout.astro';
+import PostPreview from '../../components/PostPreview.astro';
+import Pager from '../../components/Pager.astro';
+import { siteConfig } from '../../config';
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const allPosts = (await getCollection('posts'))
+    .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+  const pageSize = siteConfig.pagination.pageSize;
+  const totalPages = Math.ceil(allPosts.length / pageSize);
+
+  return Array.from({ length: totalPages - 1 }, (_, i) => {
+    const pageNum = i + 2; // Start from page 2 (page 1 is index.astro)
+    return {
+      params: { page: String(pageNum) },
+      props: {
+        posts: allPosts.slice((pageNum - 1) * pageSize, pageNum * pageSize),
+        currentPage: pageNum,
+        totalPages,
+      },
+    };
+  });
+};
+
+const { posts, currentPage, totalPages } = Astro.props;
+---
+
+<PageLayout title={`Page ${currentPage} - ${siteConfig.title}`} subtitle={siteConfig.description}>
+  {posts.map((post: any) => (
+    <PostPreview
+      title={post.data.title}
+      subtitle={post.data.subtitle}
+      date={post.data.date}
+      slug={post.id}
+      tags={post.data.tags}
+    />
+  ))}
+
+  <Pager
+    nextUrl={currentPage > 2 ? `/page/${currentPage - 1}/` : '/'}
+    prevUrl={currentPage < totalPages ? `/page/${currentPage + 1}/` : undefined}
+  />
+</PageLayout>

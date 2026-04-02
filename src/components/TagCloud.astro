@@ -1,0 +1,42 @@
+---
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('posts');
+
+const tagCounts: Record<string, number> = {};
+allPosts.forEach((post) => {
+  post.data.tags.forEach((tag) => {
+    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+  });
+});
+
+const maxCount = Math.max(...Object.values(tagCounts), 1);
+const minSize = 14;
+const maxSize = 28;
+
+function getSize(count: number): number {
+  return minSize + ((count / maxCount) * (maxSize - minSize));
+}
+
+function getColor(count: number): string {
+  const ratio = count / maxCount;
+  const r = Math.round(187 + (0 - 187) * ratio);
+  const g = Math.round(187 + (133 - 187) * ratio);
+  const b = Math.round(238 + (161 - 238) * ratio);
+  return `rgb(${r}, ${g}, ${b})`;
+}
+
+const sortedTags = Object.entries(tagCounts).sort((a, b) => b[1] - a[1]);
+---
+
+<div class="tag-cloud text-center">
+  {sortedTags.map(([tag, count]) => (
+    <a
+      href={`#${tag}`}
+      style={`font-size: ${getSize(count)}px; color: ${getColor(count)}`}
+      class="hover:!text-brand"
+    >
+      {tag}
+    </a>
+  ))}
+</div>

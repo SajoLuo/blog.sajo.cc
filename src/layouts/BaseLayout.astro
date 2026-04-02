@@ -1,0 +1,25 @@
+---
+import BaseHead from '../components/BaseHead.astro';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+  transparentNav?: boolean;
+}
+
+const { title, description, transparentNav = true } = Astro.props;
+---
+
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <BaseHead title={title} description={description} />
+  </head>
+  <body class="font-sans text-gray-dark leading-relaxed antialiased">
+    <Nav transparent={transparentNav} />
+    <slot />
+    <Footer />
+  </body>
+</html>
