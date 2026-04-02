@@ -30,8 +30,7 @@ const isPost = variant === 'post';
   ></div>
 
   {isPost ? (
-    /* Post header — left-aligned, pinned to bottom, same grid as article (offset-2 + 8-col) */
-    <div class="relative z-10 w-full max-w-[1170px] mx-auto px-4" style="padding: 200px 0 50px;">
+    <div class="relative z-10 w-full max-w-[1170px] mx-auto" style="padding: 200px 16px 50px;">
       <div class="lg:grid lg:grid-cols-12">
         <div class="hidden lg:block lg:col-span-2"></div>
         <div class="lg:col-span-8 text-white">
@@ -48,16 +47,16 @@ const isPost = variant === 'post';
           </div>
         )}
 
-        <h1 class="font-bold font-sans leading-tight mb-2" style="font-size: 55px;">
+        <h1 class="font-bold font-sans leading-tight mb-2" style="font-size: clamp(28px, 6vw, 55px);">
           {title}
         </h1>
 
         {subtitle && (
-          <h2 class="text-white/80 font-normal mb-3" style="font-size: 30px;">{subtitle}</h2>
+          <h2 class="text-white/80 font-normal mb-3" style="font-size: clamp(16px, 3vw, 30px);">{subtitle}</h2>
         )}
 
         {date && (
-          <p class="text-white/60 italic font-serif" style="font-size: 20px;">
+          <p class="text-white/60 italic font-serif" style="font-size: clamp(14px, 2vw, 20px);">
             Posted by {author || siteConfig.author} on{' '}
             {date.toLocaleDateString('en-US', {
               year: 'numeric',
@@ -70,14 +69,13 @@ const isPost = variant === 'post';
       </div>
     </div>
   ) : (
-    /* Site/page header — centered with divider between title and slogan */
-    <div class="relative z-10 w-full max-w-3xl mx-auto px-4 text-center text-white" style="padding: 150px 0;">
-      <h1 class="font-bold font-sans leading-none" style="font-size: 80px; margin-bottom: 10px;">
+    <div class="relative z-10 w-full max-w-3xl mx-auto px-4 text-center text-white" style="padding: 100px 0;">
+      <h1 class="font-bold font-sans leading-none" style="font-size: clamp(36px, 10vw, 80px); margin-bottom: 10px;">
         {title}
       </h1>
 
       {subtitle && (
-        <h2 class="text-white/70 font-light" style="font-size: 18px; margin-top: 10px;">{subtitle}</h2>
+        <h2 class="text-white/70 font-light" style="font-size: clamp(14px, 2vw, 18px); margin-top: 10px;">{subtitle}</h2>
       )}
     </div>
   )}

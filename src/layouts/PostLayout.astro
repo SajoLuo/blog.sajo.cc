@@ -58,7 +58,7 @@ const { title, subtitle, headerImg, headerMask, tags, author, date, catalog, pre
 
         {/* Post navigation — half-width cards like original */}
         {(prevPost || nextPost) && (
-          <ul class="list-none p-0 mt-10 flex gap-4">
+          <ul class="list-none p-0 mt-10 flex flex-col sm:flex-row gap-4">
             {prevPost ? (
               <li class="flex-1">
                 <a

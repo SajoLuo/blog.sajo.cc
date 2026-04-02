@@ -33,9 +33,9 @@ body {
   position: relative;
 }
 
-.prose h1 { font-size: 36px; }
-.prose h2 { font-size: 30px; border-bottom: 1px solid var(--color-gray-light); padding-bottom: 0.3em; }
-.prose h3 { font-size: 24px; }
+.prose h1 { font-size: clamp(24px, 4vw, 36px); }
+.prose h2 { font-size: clamp(20px, 3.5vw, 30px); border-bottom: 1px solid var(--color-gray-light); padding-bottom: 0.3em; }
+.prose h3 { font-size: clamp(18px, 3vw, 24px); }
 .prose h4 { font-size: 18px; }
 .prose h5 { font-size: 16px; }
 
