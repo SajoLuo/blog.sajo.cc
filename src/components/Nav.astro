@@ -52,6 +52,7 @@ const navPages = [
       id="nav-toggle"
       class="md:hidden p-2"
       aria-label="Toggle navigation"
+      aria-expanded="false"
     >
       <i class:list={['fa fa-bars text-lg', transparent ? 'text-white' : 'text-gray-dark']}></i>
     </button>
@@ -79,6 +80,8 @@ const navPages = [
 
   toggle?.addEventListener('click', () => {
     mobile?.classList.toggle('hidden');
+    const expanded = !mobile?.classList.contains('hidden');
+    toggle?.setAttribute('aria-expanded', String(expanded));
   });
 
   let lastScroll = 0;

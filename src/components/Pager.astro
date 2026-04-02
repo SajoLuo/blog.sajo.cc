@@ -8,7 +8,7 @@ const { prevUrl, nextUrl } = Astro.props;
 ---
 
 {(prevUrl || nextUrl) && (
-  <nav class="flex justify-between items-center py-8">
+  <nav aria-label="Pagination" class="flex justify-between items-center py-8">
     {nextUrl ? (
       <a href={nextUrl} class="text-sm text-gray-dark hover:text-brand no-underline">
         &larr; Newer Posts

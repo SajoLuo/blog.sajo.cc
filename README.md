@@ -1,43 +1,81 @@
-# Astro Starter Kit: Minimal
+# blog.sajo.cc
 
-```sh
-npm create astro@latest -- --template minimal
+Personal blog of Sajo, migrated from Jekyll (HuxBlog theme) to Astro. Chinese-language blog about tech, life, and miscellaneous thoughts.
+
+Live at [blog.sajo.cc](https://blog.sajo.cc)
+
+## Tech Stack
+
+- [Astro 6](https://astro.build/) -- Static site generator
+- [Tailwind CSS v4](https://tailwindcss.com/) -- Utility-first CSS
+- [Giscus](https://giscus.app/) -- Comments powered by GitHub Discussions
+- [Cloudflare Pages](https://pages.cloudflare.com/) -- Hosting and deployment
+- [Cloudflare R2](https://www.cloudflare.com/r2/) -- Image storage (via `img.sajo.cc`)
+
+## Local Development
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+The dev server starts at `http://localhost:4321`.
 
-## 🚀 Project Structure
+### Build
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+```bash
+npm run build
+npm run preview   # preview the build locally
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+## Deployment
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+This site is deployed automatically via Cloudflare Pages on push to `main`.
 
-Any static assets, like images, can be placed in the `public/` directory.
+To set up your own:
 
-## 🧞 Commands
+1. Fork this repo
+2. Connect to Cloudflare Pages
+3. Set build command to `npm run build` and output directory to `dist/`
+4. Set Node.js version to 22+ in environment variables
 
-All commands are run from the root of the project, from a terminal:
+## Project Structure
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+```
+src/
+  components/     # Astro components (Nav, Header, Footer, Sidebar, etc.)
+  content/posts/  # Markdown blog posts with frontmatter
+  layouts/        # Page layouts (Base, Page, Post)
+  pages/          # Route pages (index, about, tags, RSS, 404)
+  styles/         # Global CSS (Tailwind + prose styles)
+  config.ts       # Site configuration
+  content.config.ts  # Content collection schema
+```
 
-## 👀 Want to learn more?
+## Writing Posts
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+Create a new `.md` file in `src/content/posts/` with this frontmatter:
+
+```yaml
+---
+title: "Post Title"
+subtitle: "Optional subtitle"
+date: 2025-01-01
+author: Sajo
+headerImg: "https://img.sajo.cc/example.jpg"  # optional
+headerMask: 0.4  # optional, overlay opacity
+catalog: true    # optional, show table of contents
+tags:
+  - tag1
+  - tag2
+---
+```
+
+## Credits
+
+- Original design inspired by [HuxBlog](https://github.com/Huxpro/huxpro.github.io) by Huxpro
+- Built with [Astro](https://astro.build/)
+
+## License
+
+MIT

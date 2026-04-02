@@ -43,7 +43,7 @@ const featuredTags = Object.entries(tagCounts)
       <a href="/about/">
         <img
           src={siteConfig.sidebar.avatar}
-          alt="avatar"
+          alt={`${siteConfig.author}'s avatar`}
           class="w-4/5 rounded-md mb-3 object-cover"
         />
       </a>
@@ -52,7 +52,7 @@ const featuredTags = Object.entries(tagCounts)
       <ul class="flex gap-2 mt-3 list-none p-0">
         {siteConfig.social.rss && (
           <li>
-            <a href="/rss.xml" class="text-gray-l hover:text-brand">
+            <a href="/rss.xml" aria-label="RSS Feed" class="text-gray-l hover:text-brand">
               <span class="fa-stack fa-lg">
                 <i class="fa fa-circle fa-stack-2x"></i>
                 <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
@@ -62,7 +62,7 @@ const featuredTags = Object.entries(tagCounts)
         )}
         {siteConfig.social.weibo && (
           <li>
-            <a href={`https://weibo.com/${siteConfig.social.weibo}`} target="_blank" rel="noopener" class="text-gray-l hover:text-brand">
+            <a href={`https://weibo.com/${siteConfig.social.weibo}`} target="_blank" rel="noopener" aria-label="Weibo" class="text-gray-l hover:text-brand">
               <span class="fa-stack fa-lg">
                 <i class="fa fa-circle fa-stack-2x"></i>
                 <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
@@ -72,7 +72,7 @@ const featuredTags = Object.entries(tagCounts)
         )}
         {siteConfig.social.github && (
           <li>
-            <a href={`https://github.com/${siteConfig.social.github}`} target="_blank" rel="noopener" class="text-gray-l hover:text-brand">
+            <a href={`https://github.com/${siteConfig.social.github}`} target="_blank" rel="noopener" aria-label="GitHub" class="text-gray-l hover:text-brand">
               <span class="fa-stack fa-lg">
                 <i class="fa fa-circle fa-stack-2x"></i>
                 <i class="fa fa-github fa-stack-1x fa-inverse"></i>

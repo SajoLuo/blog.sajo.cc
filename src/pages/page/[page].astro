@@ -1,5 +1,5 @@
 ---
-import type { GetStaticPaths } from 'astro';
+import type { GetStaticPaths, InferGetStaticPropsType } from 'astro';
 import { getCollection } from 'astro:content';
 import PageLayout from '../../layouts/PageLayout.astro';
 import PostPreview from '../../components/PostPreview.astro';
@@ -26,11 +26,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   });
 };
 
-const { posts, currentPage, totalPages } = Astro.props;
+type Props = InferGetStaticPropsType<typeof getStaticPaths>;
+const { posts, currentPage, totalPages } = Astro.props as Props;
 ---
 
 <PageLayout title={`Page ${currentPage} - ${siteConfig.title}`} subtitle={siteConfig.description}>
-  {posts.map((post: any) => (
+  {posts.map((post) => (
     <PostPreview
       title={post.data.title}
       subtitle={post.data.subtitle}
