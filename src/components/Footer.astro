@@ -2,8 +2,52 @@
 import { siteConfig } from '../config';
 ---
 
-<footer class="bg-white text-gray py-12">
+<footer class="py-12" style="padding: 50px 0 65px;">
   <div class="max-w-6xl mx-auto px-4 text-center">
+    <!-- Social links -->
+    <ul class="flex justify-center gap-2 mb-4 list-none p-0">
+      {siteConfig.social.rss && (
+        <li>
+          <a href="/rss.xml" class="text-gray-l hover:text-gray transition-colors">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-rss fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+        </li>
+      )}
+      {siteConfig.social.weibo && (
+        <li>
+          <a
+            href={`https://weibo.com/${siteConfig.social.weibo}`}
+            target="_blank"
+            rel="noopener"
+            class="text-gray-l hover:text-gray transition-colors"
+          >
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-weibo fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+        </li>
+      )}
+      {siteConfig.social.github && (
+        <li>
+          <a
+            href={`https://github.com/${siteConfig.social.github}`}
+            target="_blank"
+            rel="noopener"
+            class="text-gray-l hover:text-gray transition-colors"
+          >
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+        </li>
+      )}
+    </ul>
+
     <p class="text-sm text-gray-l">
       Copyright &copy; {siteConfig.title} {new Date().getFullYear()}
     </p>

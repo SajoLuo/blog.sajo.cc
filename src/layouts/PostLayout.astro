@@ -1,7 +1,20 @@
 ---
+import { getCollection } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import Header from '../components/Header.astro';
 import Giscus from '../components/Giscus.astro';
+import { siteConfig } from '../config';
+
+const allPosts = await getCollection('posts');
+const tagCounts: Record<string, number> = {};
+allPosts.forEach((post) => {
+  post.data.tags.forEach((tag) => {
+    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
+  });
+});
+const featuredTags = Object.entries(tagCounts)
+  .filter(([, count]) => count > siteConfig.featuredTagMinCount)
+  .sort((a, b) => b[1] - a[1]);
 
 interface Props {
   title: string;
@@ -43,33 +56,70 @@ const { title, subtitle, headerImg, headerMask, tags, author, date, catalog, pre
           <slot />
         </article>
 
-        {/* Post navigation — card style matching original */}
+        {/* Post navigation — half-width cards like original */}
         {(prevPost || nextPost) && (
-          <ul class="flex justify-between list-none p-0 mt-10 gap-4">
+          <ul class="list-none p-0 mt-10 flex gap-4">
             {prevPost ? (
-              <li>
+              <li class="flex-1">
                 <a
                   href={`/posts/${prevPost.slug}/`}
-                  class="block border border-[#ddd] bg-white px-6 py-4 text-sm text-gray-dark no-underline transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:text-brand"
+                  class="pager-link block border border-[#ddd] bg-white no-underline text-center transition-all duration-200"
+                  style="padding: 20px 15px; color: #404040;"
                 >
-                  Previous<br />
-                  <span class="text-gray">{prevPost.title}</span>
+                  <span class="text-sm font-bold uppercase tracking-widest">Previous</span><br />
+                  <span class="text-gray text-sm">{prevPost.title}</span>
                 </a>
               </li>
-            ) : <li />}
+            ) : <li class="flex-1" />}
             {nextPost ? (
-              <li>
+              <li class="flex-1">
                 <a
                   href={`/posts/${nextPost.slug}/`}
-                  class="block border border-[#ddd] bg-white px-6 py-4 text-sm text-gray-dark no-underline text-right transition-all duration-200 hover:-translate-y-0.5 hover:shadow-md hover:text-brand"
+                  class="pager-link block border border-[#ddd] bg-white no-underline text-center transition-all duration-200"
+                  style="padding: 20px 15px; color: #404040;"
                 >
-                  Next<br />
-                  <span class="text-gray">{nextPost.title}</span>
+                  <span class="text-sm font-bold uppercase tracking-widest">Next</span><br />
+                  <span class="text-gray text-sm">{nextPost.title}</span>
                 </a>
               </li>
-            ) : <li />}
+            ) : <li class="flex-1" />}
           </ul>
         )}
+
+        {/* Featured Tags + Friends below pager, like original */}
+        <section class="mt-12">
+          {featuredTags.length > 0 && (
+            <div class="mb-8">
+              <hr class="border-gray-light mb-4" />
+              <h5 class="text-xs font-extrabold uppercase tracking-widest text-gray-dark mb-4">Featured Tags</h5>
+              <div class="flex flex-wrap gap-2">
+                {featuredTags.map(([tag]) => (
+                  <a
+                    href={`/tags/#${tag}`}
+                    class="text-xs text-gray-l border border-gray-l/60 rounded-full px-3 py-1 no-underline hover:text-brand hover:border-brand transition-colors"
+                  >
+                    {tag}
+                  </a>
+                ))}
+              </div>
+            </div>
+          )}
+          {siteConfig.friends.length > 0 && (
+            <div class="mb-8">
+              <hr class="border-gray-light mb-4" />
+              <h5 class="text-xs font-extrabold uppercase tracking-widest text-gray-dark mb-3">Friends</h5>
+              <ul class="flex flex-wrap gap-x-3 gap-y-1 list-none p-0">
+                {siteConfig.friends.map((friend) => (
+                  <li>
+                    <a href={friend.href} target="_blank" rel="noopener" class="text-sm text-gray hover:text-brand no-underline">
+                      {friend.title}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </section>
 
         <Giscus />
       </main>

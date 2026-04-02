@@ -153,6 +153,17 @@ body {
   color: var(--color-brand);
 }
 
+/* Pager card hover — fill brand color like original */
+.pager-link:hover {
+  background-color: var(--color-brand) !important;
+  border-color: var(--color-brand) !important;
+  color: white !important;
+}
+
+.pager-link:hover span {
+  color: white !important;
+}
+
 /* Navbar transition */
 .navbar-slide {
   transition: transform 0.4s ease;
