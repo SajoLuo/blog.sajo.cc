@@ -1,6 +1,5 @@
 ---
 // Giscus comments powered by GitHub Discussions
-import { siteConfig } from '../config';
 ---
 
 <section class="mt-12">
@@ -15,7 +14,7 @@ import { siteConfig } from '../config';
     data-reactions-enabled="1"
     data-emit-metadata="0"
     data-input-position="top"
-    data-theme={`${siteConfig.url}/giscus-custom.css`}
+    data-theme="light"
     data-lang="zh-CN"
     crossorigin="anonymous"
     async
@@ -23,8 +22,7 @@ import { siteConfig } from '../config';
 </section>
 
 <style>
-  .giscus, .giscus-frame {
-    width: 100% !important;
-    max-width: 100% !important;
+  .giscus {
+    max-width: calc(100% - 2px) !important;
   }
 </style>
