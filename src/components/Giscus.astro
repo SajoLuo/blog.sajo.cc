@@ -1,8 +1,9 @@
 ---
 // Giscus comments powered by GitHub Discussions
+import { siteConfig } from '../config';
 ---
 
-<section class="mt-12 pr-1">
+<section class="mt-12">
   <script
     src="https://giscus.app/client.js"
     data-repo="SajoLuo/blog.sajo.cc"
@@ -14,7 +15,7 @@
     data-reactions-enabled="1"
     data-emit-metadata="0"
     data-input-position="top"
-    data-theme="light"
+    data-theme={`${siteConfig.url}/giscus-custom.css`}
     data-lang="zh-CN"
     crossorigin="anonymous"
     async
