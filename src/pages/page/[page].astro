@@ -5,6 +5,7 @@ import PageLayout from '../../layouts/PageLayout.astro';
 import PostPreview from '../../components/PostPreview.astro';
 import Pager from '../../components/Pager.astro';
 import { siteConfig } from '../../config';
+import { getExcerpt } from '../../utils';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const allPosts = (await getCollection('posts'))
@@ -14,7 +15,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const totalPages = Math.ceil(allPosts.length / pageSize);
 
   return Array.from({ length: totalPages - 1 }, (_, i) => {
-    const pageNum = i + 2; // Start from page 2 (page 1 is index.astro)
+    const pageNum = i + 2;
     return {
       params: { page: String(pageNum) },
       props: {
@@ -38,6 +39,7 @@ const { posts, currentPage, totalPages } = Astro.props as Props;
       date={post.data.date}
       slug={post.id}
       tags={post.data.tags}
+      excerpt={getExcerpt(post.body)}
     />
   ))}
 

@@ -4,6 +4,7 @@ import PageLayout from '../layouts/PageLayout.astro';
 import PostPreview from '../components/PostPreview.astro';
 import Pager from '../components/Pager.astro';
 import { siteConfig } from '../config';
+import { getExcerpt } from '../utils';
 
 const allPosts = (await getCollection('posts'))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -11,18 +12,6 @@ const allPosts = (await getCollection('posts'))
 const pageSize = siteConfig.pagination.pageSize;
 const posts = allPosts.slice(0, pageSize);
 const totalPages = Math.ceil(allPosts.length / pageSize);
-
-function getExcerpt(body: string | undefined): string {
-  if (!body) return '';
-  return body
-    .replace(/^#{1,6}\s+.*$/gm, '')
-    .replace(/!\[.*?\]\(.*?\)/g, '')
-    .replace(/\[([^\]]*)\]\(.*?\)/g, '$1')
-    .replace(/[*_~`>]/g, '')
-    .replace(/\n+/g, ' ')
-    .trim()
-    .slice(0, 170) + '…';
-}
 ---
 
 <PageLayout title={siteConfig.title} subtitle={siteConfig.description}>

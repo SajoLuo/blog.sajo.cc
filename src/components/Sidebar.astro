@@ -1,15 +1,10 @@
 ---
 import { getCollection } from 'astro:content';
 import { siteConfig } from '../config';
+import { getTagCounts } from '../utils';
 
 const allPosts = await getCollection('posts');
-
-const tagCounts: Record<string, number> = {};
-allPosts.forEach((post) => {
-  post.data.tags.forEach((tag) => {
-    tagCounts[tag] = (tagCounts[tag] || 0) + 1;
-  });
-});
+const tagCounts = getTagCounts(allPosts);
 
 const featuredTags = Object.entries(tagCounts)
   .filter(([, count]) => count > siteConfig.featuredTagMinCount)

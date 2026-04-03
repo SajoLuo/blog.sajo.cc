@@ -15,8 +15,8 @@ allPosts.forEach((post) => {
   });
 });
 
-const allTags = Object.keys(tagMap).sort();
 const sortedTags = Object.entries(tagMap).sort((a, b) => a[0].localeCompare(b[0]));
+const allTags = sortedTags.map(([tag]) => tag);
 ---
 
 <BaseLayout title="Tags">
