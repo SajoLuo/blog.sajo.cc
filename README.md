@@ -37,7 +37,7 @@ To set up your own:
 1. Fork this repo
 2. Connect to Cloudflare Pages
 3. Set build command to `npm run build` and output directory to `dist/`
-4. Set Node.js version to 22+ in environment variables
+4. Use the Node.js version pinned in `.node-version` for the Pages build.
 
 ## Project Structure
 
